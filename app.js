@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'test_api'
+  database: 'api_test'
 })
 
 app.get('/', (req, res) => {

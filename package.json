@@ -12,9 +12,9 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "express": "^4.18.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.19"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://githyb.com/gcoddev/test_api.git"
