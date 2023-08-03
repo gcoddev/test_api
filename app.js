@@ -12,6 +12,7 @@ const connection = mysql.createConnection({
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'api_test',
+  port: process.env.DB_PORT || 3306
 })
 
 app.get('/', (req, res) => {
