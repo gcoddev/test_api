@@ -2,16 +2,16 @@ const mysql = require('mysql')
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const PORT = process.env.PORT || 3050
+const PORT = process.env.PORT || 3000
 const app = express()
 
 app.use(bodyParser.json())
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'api_test'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'api_test',
 })
 
 app.get('/', (req, res) => {
