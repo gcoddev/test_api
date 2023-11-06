@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 const connection = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
+  password: process.env.DB_PASSWORD || '[Yakys<3]&g_mysql;',
   database: process.env.DB_DATABASE || 'api_test',
   port: process.env.DB_PORT || 3306
 })
@@ -52,7 +52,8 @@ app.post('/todos', (req, res) => {
   const sql = 'INSERT INTO todos SET ?'
   const postTodo = {
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    status: 'ACTIVO'
   }
 
   connection.query(sql, postTodo, (error, response) => {
@@ -69,10 +70,23 @@ app.post('/todos', (req, res) => {
   })
 })
 
+
 app.put('/todo/:id', (req, res) => {
   const { id } = req.params
-  const { title, description } = req.body
-  const sql = `UPDATE todos SET title = '${title}', description = '${description}' WHERE id = ${id}`
+  const { status } = req.body
+  let sql
+  if (status) {
+    if (status == 'ACTIVO') {
+      sql = `UPDATE todos SET status = 'INACTIVO' WHERE id = ${id}`
+    } else if (status == 'INACTIVO') {
+      sql = `UPDATE todos SET status = 'ACTIVO' WHERE id = ${id}`
+    } else if (status == 'COMPLETADO') {
+      sql = `UPDATE todos SET status = 'COMPLETADO' WHERE id = ${id}`
+    }
+  } else {
+    const { title, description } = req.body
+     sql = `UPDATE todos SET title = '${title}', description = '${description}', status = ${status} WHERE id = ${id}`
+  }
 
   connection.query(sql, (error, response) => {
     if (error) throw error
@@ -90,7 +104,7 @@ app.put('/todo/:id', (req, res) => {
 
 app.delete('/todo/:id', (req, res) => {
   const { id } = req.params
-  const sql = `DELETE FROM todos WHERE id = ${id}`
+  const sql = `UPDATE todos SET status = 'ELIMINADO' WHERE id = ${id}`
 
   connection.query(sql, (error, response) => {
     if (error) throw error
